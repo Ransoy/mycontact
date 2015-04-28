@@ -1,5 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
+
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 class User extends AppModel{
 	
@@ -8,14 +10,21 @@ class User extends AppModel{
 					'rule' => 'notEmpty'
 			),
 			'Email_Address' => array(
-					'rule' => 'notEmpty'
+					'required' => array(
+				                'rule' => array('email', true),    
+				                'message' => 'Please provide a valid email address.'   
+				            ),
 			),
 			'Password' => array(
-					'required' => array(
-					                'rule' => array('notEmpty'),
-					                'message' => 'A password is required'
-					            )
-			)
+		            'required' => array(
+		                'rule' => array('notEmpty'),
+		                'message' => 'A password is required'
+		            ),
+		            'min_length' => array(
+		                'rule' => array('minLength', '6'),  
+		                'message' => 'Password must have a mimimum of 6 characters'
+		            )
+		        ),
 			
 	);
 
